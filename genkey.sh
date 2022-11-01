@@ -1,13 +1,27 @@
 #!/bin/bash
 ### cat /etc/openvpn/genkey.sh 
+#
+# Path to storage configuration file generated 
+#
 OUTDIR="/etc/openvpn/ovpn-client"
+#
+# path to EASYRSA keys and certificates
+#
 KEYDIR="/etc/openvpn/easy-rsa/pki/private"
 CRTDIR="/etc/openvpn/easy-rsa/pki/issued"
-SUFIJO=condor1815
-REMOTE=$SUFIJO".startdedicated.com"
-PORT=1194
 CA_FILE="/etc/openvpn/server/ca.crt"
-
+#
+# Name server to connect for 
+#
+SUFIJO=openvpn
+REMOTE=$SUFIJO".domain.com"
+#
+# Openvpn port to connect for
+#
+PORT=1194
+#
+# General parameters storage in a OPTIONS variable
+#
 OPTIONS="client
 dev tun
 proto udp
@@ -25,7 +39,9 @@ persist-tun
 mute-replay-warnings
 verb 3
 "
-
+#
+# This function create the ovpn config file and put all parameters in it
+#
 ovpn(){
         OVPN=$OUTDIR/$1-$SUFIJO.ovpn
         echo "$OPTIONS" > $OVPN
@@ -39,17 +55,19 @@ ovpn(){
         cat $KEYDIR/$1.key >> $OVPN
         echo "</key>" >> $OVPN
 }
-
+#
+# If not exist output file-config directory, create it
+#
 if [ ! -d $OUTDIR ]; then
         mkdir $OUTDIR
 fi
-
+#
+# For each certificate (crt) run the ovpn function and generate
+# the config file
+#
 for i in $(ls $CRTDIR/*.crt)
         do
 		f=$(basename $i .crt)
                 ovpn $f
                 echo "$OVPN generated"
         done
-
-
-
