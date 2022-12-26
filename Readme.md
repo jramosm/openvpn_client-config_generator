@@ -1,5 +1,5 @@
 # OpenVPN config File Generator
-Some years ago I had a situation in which needed to generate several certificates through EASYCERT for OPENVPN, the particular of this situation was the people who would install and use this certificate had a little knowledge about how to install the OVPN file, certificate file and the key file (3 files) in the OpenVPN software in their laptops. I needed to simplify this issue or would have headaches supporting all this user. 
+Some years ago I had a situation in which needed to generate several certificates through EASYRSA for OPENVPN, the particular of this situation was the people who would install and use this certificate had a little knowledge about how to install the OVPN file, certificate file and the key file (3 files) in the OpenVPN software in their laptops. I needed to simplify this issue or would have headaches supporting all this user. 
 
 Then researching in internet, I could be able to see that OVPN file can content the certificates and the key in PEM (base64) format embedded on it. And with this idea was born this script.
 
