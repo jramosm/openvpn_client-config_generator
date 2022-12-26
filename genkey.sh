@@ -43,7 +43,8 @@ verb 3
 # This function create the ovpn config file and put all parameters in it
 #
 ovpn(){
-        OVPN=$OUTDIR/$1-$SUFIJO.ovpn
+    OVPN=$OUTDIR/$1-$SUFIJO.ovpn
+    if [ ! -f $OVPN ]; then
         echo "$OPTIONS" > $OVPN
         echo "<ca>" >> $OVPN
         cat $CA_FILE >> $OVPN
@@ -54,6 +55,10 @@ ovpn(){
         echo "<key>" >> $OVPN
         cat $KEYDIR/$1.key >> $OVPN
         echo "</key>" >> $OVPN
+        echo "$OVPN Generated"
+     else
+        echo "$OVPN Exists"          
+    fi
 }
 #
 # If not exist output file-config directory, create it
@@ -69,5 +74,4 @@ for i in $(ls $CRTDIR/*.crt)
         do
 		f=$(basename $i .crt)
                 ovpn $f
-                echo "$OVPN generated"
         done
